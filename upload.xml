@@ -1,0 +1,14 @@
+<target name="upload_files" depends="initialize">
+    <ftp server="your_server.com"
+         userid="your_user_name"
+         password="your_password"
+         port="21"
+         remotedir="/public_html"
+         passive="yes"
+         binary="no">
+        <fileset dir=".">
+            <include name="assets/*"   />
+            <include name="index.html" />
+        </fileset>
+    </ftp>
+</target>

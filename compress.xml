@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+
+<project name="Demo" default="initialize">
+
+	<target name="get_properties">
+		<property name="js_dir" value="js" />
+		<property name="css_dir" value="css" />
+		<property name="assets_dir" value="assets" />
+		<echo>Imported Properties</echo>
+	</target>
+
+	<target name="concat_css">
+		<concat destfile="${assets_dir}/style.css">
+			<filelist id="files" dir="${css_dir}">
+				<file name="reset.css" /> 
+				<file name="grid.css" /> 
+				<file name="custom.css" /> 
+			</filelist>
+		</concat>
+	</target>
+
+	<target name="concat_js">
+		<concat destfile="${assets_dir}/script.js">
+			<filelist id="files" dir="${js_dir}">
+				<file name="jquery-latest.js" /> 
+				<file name="tokens.js" /> 
+				<file name="parse.js" /> 
+			</filelist>
+		</concat>
+	</target>
+
+	<target name="compress">
+		<java jar="yuicompressor-2.4.7.jar" fork="true">
+			<arg value="${file}" />
+			<arg value="-o" />
+			<arg value="${file}" />
+		</java>
+		<echo>${file}</echo> 
+	</target>
+
+	<target name="compress_css" depends="concat_css">
+		<antcall target="compress">
+			<param name="file" value="${assets_dir}/style.css" />
+		</antcall>
+	</target>
+
+	<target name="compress_js" depends="concat_js">
+		<antcall target="compress">
+			<param name="file" value="${assets_dir}/script.js" />
+		</antcall>
+	</target>
+
+	<target name="initialize" depends="get_properties">
+		<mkdir dir="${assets_dir}" />
+		<antcall target="compress_css" />
+		<antcall target="compress_js"  />
+		<echo>Done!</echo>
+	</target>
+
+</project>

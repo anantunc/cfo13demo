@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<project name="Demo" default="initialize">
+
+	<target name="helloWorld" depends="helloHumans">
+		<echo> Hello World! </echo>
+	</target>
+
+	<target name="helloHumans" >
+		<echo> Hey Humans! </echo>
+	</target>
+	
+</project>	

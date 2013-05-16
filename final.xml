@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<project name="FinalDemo">
+
+	<import file="git_macros.xml" />
+	<import file="compress.xml" />
+  
+	<target name="testConcatCompress" depends="get_properties">
+		<mkdir dir="${assets_dir}" />
+		<antcall target="compress_css" />
+		<antcall target="compress_js"  />
+		<echo>Concat and Compress Done!</echo>
+	</target>
+	
+	<target name="testAdd" depends="testConcatCompress">
+		<git-add path="" target="-A" />
+	</target>
+
+	<target name="testCommit" depends="testAdd">
+		<git-commit path="" message="-m new commit" />
+	</target>
+   	
+	<target name="testPush" depends="testCommit">
+		<git-push path="" branch="origin" head="master" />
+	</target>
+
+	<target name="testLog">
+		<git-log path="" options="--oneline" />
+	</target>
+	
+</project>
